@@ -2,15 +2,10 @@
 
 class Functions
 {
-    const MIN_AMOUNT = 1000;
-    const MAX_AMOUNT = 10000;
-    const MIN_PERIOD = 6;
-    const MAX_PERIOD = 24;
-
-    public function debug($data)
-    {
-        echo '<pre>' . print_r($data, 1) . '</pre>';
-    }
+    public const MIN_AMOUNT = 1000;
+    public const MAX_AMOUNT = 10000;
+    public const MIN_PERIOD = 6;
+    public const MAX_PERIOD = 24;
 
     public function load(array $data): array
     {
@@ -31,27 +26,25 @@ class Functions
             }
         }
 
-        if (!empty($_POST['inn'])) {
-            $identificationNumber = $data['inn']['value'];
-            $this->validateInn($identificationNumber);
+        if (!empty($data['amount']['value']) && (int)$data['amount']['value'] < self::MIN_AMOUNT) {
+            $error .= "Amount less than the minimum amount " . self::MIN_AMOUNT;
         }
 
-        if ((int)$data['amount']['value'] < self::MIN_AMOUNT) {
-
-            $error .= "Amount less than the minimum amount " . self::MIN_AMOUNT;
-
-        } else if ((int)$data['amount']['value'] > self::MAX_AMOUNT) {
-
+        if (!empty($data['amount']['value']) && (int)$data['amount']['value'] > self::MAX_AMOUNT) {
             $error .= "Amount more than the maximum amount " . self::MAX_AMOUNT;
         }
 
-        if ((int)$data['period']['value'] < self::MIN_PERIOD) {
-
+        if (!empty($data['amount']['value']) && (int)$data['period']['value'] < self::MIN_PERIOD) {
             $error .= "Period less than the minimum " . self::MIN_PERIOD;
+        }
 
-        } else if ((int)$data['period']['value'] > self::MAX_PERIOD) {
-
+        if (!empty($data['period']['value']) && (int)$data['period']['value'] > self::MAX_PERIOD) {
             $error .= "Period more than the maximum " . self::MAX_PERIOD;
+        }
+
+        if (!empty($_POST['inn'])) {
+            $identificationNumber = $data['inn']['value'];
+            $this->validateInn($identificationNumber);
         }
 
         return $error;
@@ -64,7 +57,7 @@ class Functions
 
         $control = (int)substr($innString, -1);
 
-        $stringWithoutLastCharter = substr($innString,0,-1);
+        $stringWithoutLastCharter = substr($innString, 0, -1);
 
         $total = 0;
 

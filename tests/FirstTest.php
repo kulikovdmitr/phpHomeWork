@@ -8,6 +8,11 @@ class FirstTest extends TestCase
     {
         require '../src/Main.php';
         $result = new Main();
-//        self::assertEquals('',$result->main());
+        $functions = new Functions();
+        $result->main();
+        $load = $functions->load(Data::fields());
+        $errors = $functions->validation($load);
+
+        self::assertEquals('Field  firstname not filledField  lastname not filledField  inn not filledField  amount not filledField  period not filledField  purpose not filled', $errors);
     }
 }

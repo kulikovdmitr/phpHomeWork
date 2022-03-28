@@ -12,7 +12,6 @@ class Main
         if (!empty($_POST)) {
             $functions = new Functions();
             $load = $functions->load(Data::fields());
-            //$functions->debug($load);
             $errors = $functions->validation($load);
             if ($errors) {
                 $result = ['answer' => 'error', 'errors' => $errors];
@@ -26,4 +25,3 @@ class Main
 
 $main = new Main();
 $main->main();
-

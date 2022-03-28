@@ -34,4 +34,3 @@ class Data
         return $fields;
     }
 }
-
