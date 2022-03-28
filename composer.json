@@ -1,0 +1,14 @@
+{
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  },
+  "autoload": {
+    "psr-4": {
+      "" : "src",
+      "Test\\": "tests"
+    }
+  },
+  "require": {
+    "ext-mbstring": "*"
+  }
+}
