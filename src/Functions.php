@@ -2,10 +2,12 @@
 
 class Functions
 {
-    public const MIN_AMOUNT = 1000;
-    public const MAX_AMOUNT = 10000;
-    public const MIN_PERIOD = 6;
-    public const MAX_PERIOD = 24;
+    private const MIN_AMOUNT = 1000;
+    private const MAX_AMOUNT = 10000;
+    private const MIN_PERIOD = 6;
+    private const MAX_PERIOD = 24;
+    private const ALLOWED_WORDS = ['holiday', 'repair', 'consumer', 'electronics', 'wedding', 'rental',
+        'car', 'school', 'investment'];
 
     public function load(array $data): array
     {
@@ -47,6 +49,12 @@ class Functions
             $this->validateInn($identificationNumber);
         }
 
+        if (!empty($_POST['purpose'])) {
+            $purposeValue = $data['purpose']['value'];
+            $result = $this->purposeValueCheck($purposeValue);
+            $error .= $result;
+        }
+
         return $error;
     }
 
@@ -78,5 +86,21 @@ class Functions
             }
         }
         return $control === $mod;
+    }
+
+    public function purposeValueCheck(string $purposeValue):string
+    {
+        //нужно доделать
+        foreach (self::ALLOWED_WORDS as $key => $word) {
+
+            $pos = strripos($purposeValue, $word);
+
+            if ($pos === true) {
+                return "OK";
+            } else {
+                return "Purpose must contain one of the words: holiday, repair, consumer electronics, wedding, rental, car,
+             school, investment, returned - " . $purposeValue;
+            }
+        }
     }
 }
