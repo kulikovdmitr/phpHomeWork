@@ -60,7 +60,7 @@ class Functions
 
     public function validateInn(string $innString)
     {
-        $mul_1 = [1,2,3,4,5,6,7,8,9,1];
+        $mult_1 = [1,2,3,4,5,6,7,8,9,1];
         $mult_2 = [3,4,5,6,7,8,9,1,2,3];
 
         $control = (int)substr($innString, -1);
@@ -70,7 +70,7 @@ class Functions
         $total = 0;
 
         for ($i = 0; $i < 10; $i++) {
-            $total += $stringWithoutLastCharter[$i] * $mul_1[$i];
+            $total += $stringWithoutLastCharter[$i] * $mult_1[$i];
         }
         $mod = $total % 11;
 
